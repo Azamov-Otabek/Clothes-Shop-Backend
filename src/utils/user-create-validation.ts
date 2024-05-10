@@ -10,10 +10,6 @@ export const UserEmailValidation = [
         required: true,
         message: 'Emailni kiriting',
     },
-    {
-        type: 'email',
-        message: 'Emailni to\'ri formatda kiriting',
-    },
 ]
 
 export const PasswordValidation = [
