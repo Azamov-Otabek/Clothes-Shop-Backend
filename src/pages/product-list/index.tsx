@@ -14,7 +14,7 @@ import { setCookies } from '../../utils/cocies';
 function index() {
   const navigate = useNavigate()
   const [ispage, setispage] = useState(1)
-  const {data, count, getProduct, isLoader, deleteProduct, postProduct, updateProduct}:any = useStore(ZusProduct)
+  const {data, count, getProduct, isLoader, postProduct}:any = useStore(ZusProduct)
   const {datas, getCategory}:any = useStore(ZusCategory)
   const limit = 5
   const lastcount = Math.ceil(count/limit)
@@ -70,18 +70,9 @@ const thead: TableProps<DataType>['columns'] = [
     ),
   },
 ];
-  async function deleteButton(id:any){
-    await deleteProduct(id)
-    getData()
-  }
 
   async function postData(data:any){
     await postProduct(data)
-    getData()
-  }
-
-  async function updateData(data:any){
-    await updateProduct(data)
     getData()
   }
 

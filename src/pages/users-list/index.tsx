@@ -11,7 +11,7 @@ import {Modal} from '../../components/ui';
 
 function index() {
   const [ispage, setispage] = useState(1)
-  const {data, count, getUsers, isLoader, deleteUsers, postUsers, updateUsers}:any = useStore(ZusUser)
+  const {data, count, getUsers, isLoader, deleteUsers, postUsers, updateUsers} = useStore(ZusUser)
   const limit = 5
   const lastcount = Math.ceil(count/limit)
   const getData = async() => {

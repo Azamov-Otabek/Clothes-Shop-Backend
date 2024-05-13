@@ -1,4 +1,4 @@
-import { ModalForm, ProForm,ProFormSelect,ProFormText} from '@ant-design/pro-components';
+import { ModalForm, ProForm,ProFormText} from '@ant-design/pro-components';
 import { Button, Radio, Select } from 'antd';
 import { useState } from 'react';
 
@@ -20,13 +20,26 @@ export default (props:any) => {
     setGender(e.target.value);
   };
   function handleFormChange(e:any){
-    console.log(e);
+      e.category_id = category
+      e.made_in = made
+      e.cost = +e.cost
+      e.count = +e.count
+      e.size = +e.size
+      e.age_max = +e.age_max
+      e.age_min = +e.age_min
+      e.discount = +e.discount
+      e.for_gender = gender
+    if(props.text == "add"){
+      props.postData(e)
+    }else{
+      props.postData(e)
+    }
   }
 
 
   return (
     <ModalForm<{
-        age_max: string
+        age_max: number
         age_min: string
         color: string
         cost: string
@@ -38,12 +51,11 @@ export default (props:any) => {
     }>
       title="ASTORIA"
       trigger={
-        <Button type="primary" className='flex items-center text-[16px] font-semibold'> {props.text == 'add' ?  `${props.title} qoshish`: "Update" }</Button>   
+        <Button type="primary" className='flex items-center text-[16px] font-semibold'> {props.text == 'add' ?  `${props.title}`: "Update" }</Button>   
       }
       autoFocusFirstInput
       onFinish={async (values) => {
         await waitTime(2000);
-        console.log(values);
         handleFormChange(values)
       }}
       modalProps={{
@@ -65,6 +77,7 @@ export default (props:any) => {
           name="age_max"
           label="Max age kiriting"
           placeholder="40"
+          initialValue={props.title == 'Update' && props.text['age_max'] || ''}
           rules={[
             {
               required: true,
@@ -80,6 +93,7 @@ export default (props:any) => {
           name="age_min"
           label="Min age kiriting"
           placeholder="15"
+          initialValue={props.title == 'Update' && props.text['age_min'] || ''}
           rules={[
             {
               required: true,
@@ -95,6 +109,7 @@ export default (props:any) => {
           name="color"
           label="Rangini kiriting"
           placeholder="Sariq"
+          initialValue={props.title == 'Update' && props.text['color'] || ''}
           rules={[
             {
               required: true,
@@ -107,6 +122,7 @@ export default (props:any) => {
               hasFeedback
               name="cost"
               label="Narxini kiriting"
+              initialValue={props.title == 'Update' && props.text['cost'] || ''}
               rules={[
                 {
                   required: true,
@@ -123,6 +139,7 @@ export default (props:any) => {
         name="count"
         label="Sonini kiriting"
         placeholder="30"
+        initialValue={props.title == 'Update' && props.text['count'] || ''}
         rules={[{
           required: true,
           message: 'Sonini kiriting',
@@ -133,6 +150,7 @@ export default (props:any) => {
         width="md"
         name="description"
         label="Product description kiriting" 
+        initialValue={props.title == 'Update' && props.text['description'] || ''}
         placeholder="...."
         rules={[{
           required: true,
@@ -147,6 +165,7 @@ export default (props:any) => {
         hasFeedback
         name="discount"
         label="Chegirma narxini kiriting"
+        initialValue={props.title == 'Update' && props.text['discount'] || ''}
         placeholder="25"
         rules={[{
           required: true,
@@ -159,6 +178,7 @@ export default (props:any) => {
         name="product_name"
         label="Product nomini kiriting" 
         placeholder="Xudi"
+        initialValue={props.title == 'Update' && props.text['product_name'] || ''}
         rules={[{
           required: true,
           message: 'Product nomini kiriting',
@@ -171,6 +191,7 @@ export default (props:any) => {
         hasFeedback
         name="size"
         label="Product o'lchamini kiriting "
+        initialValue={props.title == 'Update' && props.text['size'] || ''}
         placeholder="25"
         rules={[{
           required: true,
@@ -180,7 +201,7 @@ export default (props:any) => {
        <ProForm.Group>
         <Select
           showSearch
-          onSelect={(e) => setCategory(e.target)}
+          onSelect={(e) => setCategory(e)}
           style={{ width: 200 }}
           placeholder="Categoriya tanlang"
           optionFilterProp="children"
@@ -193,7 +214,7 @@ export default (props:any) => {
         />
          <Select
           showSearch
-          onSelect={(e) => setmade(e.target)}
+          onSelect={(e) => setmade(e)}
           style={{ width: 200 }}
           placeholder="Davlat tanlang"
           optionFilterProp="children"

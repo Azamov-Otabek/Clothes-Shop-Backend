@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 
 function index() {
   const [ispage, setispage] = useState(1)
-  const {datas, count, getCategory, isLoader, deleteCategory, postCategory, updateCategory}:any = useStore(ZusCategory)
+  const {datas, count, getCategory, isLoader, deleteCategory, postCategory, updateCategory} = useStore(ZusCategory)
   const limit = 5
   const lastcount = Math.ceil(count/limit)
   const getData = async() => {

@@ -122,7 +122,7 @@ export default (props:any) => {
       <ProFormText
           hasFeedback
         width="md"
-        name="phone"
+        name="phone_number"
         label="Telefon raqam kiriting"
         placeholder="9989XXXXXXXX"
         rules={UserPhoneValidation}

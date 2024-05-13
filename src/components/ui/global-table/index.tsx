@@ -7,7 +7,7 @@ function index(props:any) {
       <div>
         <Table columns={props.thead} dataSource={props?.data?.map((e:any,i:number ) => {
           return {...e, key: i }
-        })} pagination={false}  rowClassName={(record, index) => {
+        })} pagination={false}  rowClassName={(_, index) => {
           // return a class name based on record or index
           return index % 2 === 0 ? 'even-row' : 'odd-row';
         }}/>

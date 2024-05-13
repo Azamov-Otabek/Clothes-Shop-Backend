@@ -31,7 +31,7 @@ const useMedia = create((set) => ({
   deleteMedia: async (payload:any) => {
     try{
         set({isLoader: true})
-        const response = await http.delete(`/category/${payload}`)
+        const response = await http.delete(`/media/${payload}`)
         if(response.status === 200){
           set((state:any) => ({
             data: state.data.filter((x:any) => x.id !== payload)

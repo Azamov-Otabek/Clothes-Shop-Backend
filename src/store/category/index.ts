@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import http from "../../service/config";
 import {toast} from 'react-toastify'
-import { postData, getData } from "../../interface/category";
+import { CategoryStore } from "../../interface/category";
 
 
-const useCategoryStore = create((set) => ({
+const useCategoryStore = create <CategoryStore>((set) => ({
   isLoader: false,
   datas: [],
   count: 0,
-  getCategory: async (payload:getData) => {
+  getCategory: async (payload) => {
     try{
         set({isLoader: true})
         const response = await http.get(`/categories?page=${payload.page}&limit=${payload.limit}`)
@@ -23,15 +23,15 @@ const useCategoryStore = create((set) => ({
     }
 
   },
-  deleteCategory: async (payload:string) => {
+  deleteCategory: async (payload) => {
     try{
         set({isLoader: true})
         const response = await http.delete(`/category/${payload}`)
         if(response.status === 200){
           set((state:any) => ({
-            datas: state.data.filter((x:any) => x.id !== payload)
+            datas: state.datas.filter((x:any) => x.id !== payload)
         }));
-        toast.success('Users deleted successfully')
+        toast.success('Category deleted successfully')
         }
 
         set({isLoader: false})
@@ -41,15 +41,15 @@ const useCategoryStore = create((set) => ({
         set({isLoader: false})
     }
   },
-  postCategory: async (payload:postData) => {
+  postCategory: async (payload) => {
     try{
         set({isLoader: true})
         const response = await http.post(`/category`, payload)
         if(response.status === 201){
           set((state:any) => ({
-            datas: [...state.data, response.data]
+            datas: [...state.datas, response.data]
         }));
-        toast.success('Users added successfully')
+        toast.success('Category added successfully')
         set({isLoader: false})
         }
       }catch(err){
@@ -58,14 +58,14 @@ const useCategoryStore = create((set) => ({
         set({isLoader: false})
       }  
   },
-  updateCategory: async (payload:postData) => {
+  updateCategory: async (payload) => {
     try{
         set({isLoader: true})
         const response = await http.put(`/category`, payload)
         if(response.status === 200){
           set({datas: response?.data?.user})
         }
-        toast.success('Users updated successfully')
+        toast.success('Catefory updated successfully')
         set({isLoader: false})
       }catch(err){
         console.log(err)

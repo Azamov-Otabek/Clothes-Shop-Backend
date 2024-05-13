@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import http from "../../service/config";
 import {toast} from 'react-toastify'
-import {PutPostData, getData } from "../../interface/workers";
+import { UserStore } from "../../interface/users";
 
-const useUserStore = create((set) => ({
+const useUserStore = create <UserStore> ((set) => ({
   isLoader: false,
   data: [],
   count: 0,
-  getUsers: async (payload:getData) => {
+  getUsers: async (payload) => {
     try{
         set({isLoader: true})
         const response = await http.get(`/users?page=${payload.page}&limit=${payload.limit}`)
@@ -22,7 +22,7 @@ const useUserStore = create((set) => ({
     }
 
   },
-  deleteUsers: async (payload:string) => {
+  deleteUsers: async (payload) => {
     try{
         set({isLoader: true})
         const response = await http.delete(`/user/${payload}`)
@@ -40,7 +40,7 @@ const useUserStore = create((set) => ({
         set({isLoader: false})
     }
   },
-  postUsers: async (payload:PutPostData) => {
+  postUsers: async (payload) => {
     try{
         set({isLoader: true})
         const response = await http.post(`/user`, payload)
@@ -57,7 +57,7 @@ const useUserStore = create((set) => ({
         set({isLoader: false})
       }  
   },
-  updateUsers: async (payload:PutPostData) => {
+  updateUsers: async (payload) => {
     try{
         set({isLoader: true})
         const response = await http.put(`/user`, payload)
