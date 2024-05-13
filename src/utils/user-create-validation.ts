@@ -10,6 +10,10 @@ export const UserEmailValidation = [
         required: true,
         message: 'Emailni kiriting',
     },
+    {
+        type: 'email',
+        message: 'Emailni to\'ri formatda kiriting',
+    },
 ]
 
 export const PasswordValidation = [
@@ -39,7 +43,7 @@ export const UserAgeValidation = [
     {
         required: true,
         message: 'Yoshni kiriting',
-    },
+    }
 ]
 
 export const UserPhoneValidation = [
@@ -48,7 +52,7 @@ export const UserPhoneValidation = [
         message: 'Telefon raqamni kiriting',
     },
     {
-        pattern: /^\+998\d{9}$/,
-        message: 'Telefon raqamni to\'gri kiriting (+998)',
+        pattern: /^\998\d{9}$/,
+        message: 'Telefon raqamni to\'gri kiriting (998)',
     }
 ]

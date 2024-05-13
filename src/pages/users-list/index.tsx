@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Space, Spin } from 'antd';
 import type { TableProps } from 'antd';
 import { DataType } from '../../interface/global';
-import { ZusWorker } from '@store';
+import { ZusUser } from '@store';
 import { useStore } from 'zustand';
 import { GlobalTable } from '@ui';
 import { ToastContainer } from 'react-toastify';
@@ -11,7 +11,7 @@ import {Modal} from '../../components/ui';
 
 function index() {
   const [ispage, setispage] = useState(1)
-  const {data, count, getWorkers, isLoader, deleteWorkers, postWorkers, updateWorkers}:any = useStore(ZusWorker)
+  const {data, count, getUsers, isLoader, deleteUsers, postUsers, updateUsers}:any = useStore(ZusUser)
   const limit = 5
   const lastcount = Math.ceil(count/limit)
   const getData = async() => {
@@ -19,7 +19,7 @@ function index() {
       page: ispage,
       limit: limit,
     }
-    await getWorkers(user)
+    await getUsers(user)
 }
 
 const thead: TableProps<DataType>['columns'] = [
@@ -56,24 +56,24 @@ const thead: TableProps<DataType>['columns'] = [
     dataIndex: 'action',
     render: (__, _, i) => (
       <Space size="middle">
-        <a><Modal postData={[data[i]]} text={updateData}/></a>
-        <a className='bg-[#151341] py-[7px] px-[15px] rounded-md text-white font-bold' onClick={() => deleteButton(data[i].id)}>Delete</a>
+        <a><Modal postData={updateData} text={updateData}/></a>
+        <a className='bg-[#151341] py-[7px] px-[15px] rounded-md text-white font-bold ' onClick={() => deleteButton(data[i].id)}>Delete</a>
       </Space>
     ),
   },
 ];
   async function deleteButton(id:any){
-    await deleteWorkers(id)
+    await deleteUsers(id)
     getData()
   }
 
   async function postData(data:any){
-    await postWorkers(data)
+    await postUsers(data)
     getData()
   }
 
   async function updateData(data:any){
-    await updateWorkers(data)
+    await updateUsers(data)
     getData()
   }
     useEffect(() => {
@@ -82,7 +82,7 @@ const thead: TableProps<DataType>['columns'] = [
   return (
    <>
       <ToastContainer/>
-      <div className='flex justify-end  py-5'><Modal postData={postData} text={'add'} title={'Worker'}/></div>
+      <div className='flex justify-end  py-5'><Modal postData={postData} text={'add'} title={'User'}/></div>
       {isLoader ?  <div className='flex justify-center mt-[200px]'> <Spin size="large" /></div> :
       <GlobalTable thead={thead} data={data} lastcount={lastcount} setispage={setispage} ispage={ispage}/>}
      </>

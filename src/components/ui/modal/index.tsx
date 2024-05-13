@@ -1,4 +1,3 @@
-import { PlusOutlined } from '@ant-design/icons';
 import {LockOutlined} from '@ant-design/icons'
 import { ModalForm, ProForm,ProFormText} from '@ant-design/pro-components';
 import { Button, theme, Radio } from 'antd';
@@ -16,16 +15,23 @@ const waitTime = (time: number = 100) => {
 
 export default (props:any) => {
   const { token } = theme.useToken();  
-  
   const [gender, setGender] = useState('male');
   const handleGenderChange = (e:any) => {
     setGender(e.target.value);
   };
   function handleFormChange(e:any){
     e.gender = gender
-    props.postData(e)
+    if(props.text == 'add'){
+      e.age = +e.age
+      props.postData(e)
+    }else{
+      e.age = +e.age
+      e.id = props.postData[0].id
+      e.access_token = props.postData[0].access_token || ''
+      e.refresh_token = props.postData[0].refresh_token || ''
+      props.text(e)
+    }
   }
-
 
   return (
     <ModalForm<{
@@ -37,10 +43,7 @@ export default (props:any) => {
     }>
       title="ASTORIA"
       trigger={
-        <Button type="primary" className='flex items-center text-[16px] font-semibold'>
-          <PlusOutlined />
-          User qo'shish
-        </Button>
+        <Button type="primary" className='flex items-center text-[16px] font-semibold'> {props.text == 'add' ?  `${props.title} qoshish`: "Update" }</Button>   
       }
       autoFocusFirstInput
       onFinish={async (values) => {
@@ -49,7 +52,7 @@ export default (props:any) => {
       }}
       modalProps={{
         destroyOnClose: true,
-        onCancel: () => console.log('run'),
+        onCancel: () => ''
       }}
       submitTimeout={2000}
       submitter={{
@@ -67,6 +70,7 @@ export default (props:any) => {
           label="Ism kiriting"
           placeholder="John"
           rules={UserNameValidation}
+          
         />
 
         <ProFormText

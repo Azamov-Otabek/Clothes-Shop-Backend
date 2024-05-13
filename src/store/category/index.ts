@@ -1,19 +1,20 @@
 import { create } from "zustand";
 import http from "../../service/config";
 import {toast} from 'react-toastify'
-import { WorkerStore } from "../../interface/workers";
+import { postData, getData } from "../../interface/category";
 
-const useWorkerStore =  create <WorkerStore> ((set) => ({
+
+const useCategoryStore = create((set) => ({
   isLoader: false,
-  data: [],
+  datas: [],
   count: 0,
-  getWorkers: async (payload) => {
+  getCategory: async (payload:getData) => {
     try{
         set({isLoader: true})
-        const response = await http.get(`/workers?page=${payload.page}&limit=${payload.limit}`)
+        const response = await http.get(`/categories?page=${payload.page}&limit=${payload.limit}`)
         if(response.status === 200){
-          set({data: response?.data?.user})
-          set({count: response?.data?.totcal_count})
+          set({datas: response?.data?.categories})
+          set({count: response?.data?.total_count})
         }
         set({isLoader: false})
     }catch(e){
@@ -22,15 +23,15 @@ const useWorkerStore =  create <WorkerStore> ((set) => ({
     }
 
   },
-  deleteWorkers: async (payload) => {
+  deleteCategory: async (payload:string) => {
     try{
         set({isLoader: true})
-        const response = await http.delete(`/worker/${payload}`)
+        const response = await http.delete(`/category/${payload}`)
         if(response.status === 200){
           set((state:any) => ({
-            data: state.data.filter((x:any) => x.id !== payload)
+            datas: state.data.filter((x:any) => x.id !== payload)
         }));
-        toast.success('Workers deleted successfully')
+        toast.success('Users deleted successfully')
         }
 
         set({isLoader: false})
@@ -40,15 +41,15 @@ const useWorkerStore =  create <WorkerStore> ((set) => ({
         set({isLoader: false})
     }
   },
-  postWorkers: async (payload) => {
+  postCategory: async (payload:postData) => {
     try{
         set({isLoader: true})
-        const response = await http.post(`/worker`, payload)
+        const response = await http.post(`/category`, payload)
         if(response.status === 201){
           set((state:any) => ({
-            data: [...state.data, response.data]
+            datas: [...state.data, response.data]
         }));
-        toast.success('Workers added successfully')
+        toast.success('Users added successfully')
         set({isLoader: false})
         }
       }catch(err){
@@ -57,14 +58,14 @@ const useWorkerStore =  create <WorkerStore> ((set) => ({
         set({isLoader: false})
       }  
   },
-  updateWorkers: async (payload) => {
+  updateCategory: async (payload:postData) => {
     try{
         set({isLoader: true})
-        const response = await http.put(`/worker`, payload)
+        const response = await http.put(`/category`, payload)
         if(response.status === 200){
-          set({data: response?.data?.user})
+          set({datas: response?.data?.user})
         }
-        toast.success('Workers updated successfully')
+        toast.success('Users updated successfully')
         set({isLoader: false})
       }catch(err){
         console.log(err)
@@ -75,4 +76,4 @@ const useWorkerStore =  create <WorkerStore> ((set) => ({
 }));
 
 
-export default useWorkerStore;
+export default useCategoryStore;

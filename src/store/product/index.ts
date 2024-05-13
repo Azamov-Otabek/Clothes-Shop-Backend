@@ -1,19 +1,19 @@
 import { create } from "zustand";
 import http from "../../service/config";
 import {toast} from 'react-toastify'
-import { WorkerStore } from "../../interface/workers";
 
-const useWorkerStore =  create <WorkerStore> ((set) => ({
+
+const useProductStore = create((set) => ({
   isLoader: false,
   data: [],
   count: 0,
-  getWorkers: async (payload) => {
+  getProduct: async (payload:any) => {
     try{
         set({isLoader: true})
-        const response = await http.get(`/workers?page=${payload.page}&limit=${payload.limit}`)
+        const response = await http.get(`/products?page=${payload.page}&limit=${payload.limit}`)
         if(response.status === 200){
-          set({data: response?.data?.user})
-          set({count: response?.data?.totcal_count})
+          set({data: response?.data?.products})
+          set({count: response?.data?.total_count})
         }
         set({isLoader: false})
     }catch(e){
@@ -22,15 +22,15 @@ const useWorkerStore =  create <WorkerStore> ((set) => ({
     }
 
   },
-  deleteWorkers: async (payload) => {
+  deleteProduct: async (payload:any) => {
     try{
         set({isLoader: true})
-        const response = await http.delete(`/worker/${payload}`)
+        const response = await http.delete(`/product/${payload}`)
         if(response.status === 200){
           set((state:any) => ({
             data: state.data.filter((x:any) => x.id !== payload)
         }));
-        toast.success('Workers deleted successfully')
+        toast.success('Users deleted successfully')
         }
 
         set({isLoader: false})
@@ -40,15 +40,15 @@ const useWorkerStore =  create <WorkerStore> ((set) => ({
         set({isLoader: false})
     }
   },
-  postWorkers: async (payload) => {
+  postProduct: async (payload:any) => {
     try{
         set({isLoader: true})
-        const response = await http.post(`/worker`, payload)
+        const response = await http.post(`/product`, payload)
         if(response.status === 201){
           set((state:any) => ({
             data: [...state.data, response.data]
         }));
-        toast.success('Workers added successfully')
+        toast.success('Users added successfully')
         set({isLoader: false})
         }
       }catch(err){
@@ -57,14 +57,14 @@ const useWorkerStore =  create <WorkerStore> ((set) => ({
         set({isLoader: false})
       }  
   },
-  updateWorkers: async (payload) => {
+  updateProduct: async (payload:any) => {
     try{
         set({isLoader: true})
-        const response = await http.put(`/worker`, payload)
+        const response = await http.put(`/product`, payload)
         if(response.status === 200){
           set({data: response?.data?.user})
         }
-        toast.success('Workers updated successfully')
+        toast.success('Users updated successfully')
         set({isLoader: false})
       }catch(err){
         console.log(err)
@@ -75,4 +75,4 @@ const useWorkerStore =  create <WorkerStore> ((set) => ({
 }));
 
 
-export default useWorkerStore;
+export default useProductStore;

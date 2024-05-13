@@ -30,7 +30,7 @@ const App: React.FC = () => {
         <img src="https://astoriapastryshop.com/wp-content/uploads/2023/03/cropped-Astoria-Logo-New.png" alt="" />
         <div className='flex flex-col p-[40px] gap-[40px]'>
           {root.map((e,i) => {
-            return ( <NavLink key={i} to={e.path} className={pathname == e.path ? "text-white font-bold text-[30px] " : 'text-[#ffffff7a] font-bold text-[30px]'}>{e.icon} {e.name}</NavLink>)})}
+            return ( <NavLink key={i} to={e.path} className={pathname == e.path ? "text-white font-bold text-[28px] " : 'text-[#ffffff7a] font-semibold text-[28px]'}>{e.icon} {e.name}</NavLink>)})}
         </div>
       </Sider>
       <Layout style={{height: '100%'}}>

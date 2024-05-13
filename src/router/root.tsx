@@ -1,11 +1,17 @@
-import { Products, Worker, Categories,   } from "@pages";
+import { Products, UsersList, Categories, Worker} from "@pages";
 import {UsergroupDeleteOutlined, ProductOutlined , ShoppingCartOutlined} from '@ant-design/icons'
 
 
 export const root = [
     {
-        name: "Workers",
+        name: "Users List",
         path: "/admin",
+        element: <UsersList/>,
+        icon: <UsergroupDeleteOutlined/>
+    },
+    {
+        name: "Worker List",
+        path: "/admin/worker",
         element: <Worker/>,
         icon: <UsergroupDeleteOutlined/>
     },
@@ -20,5 +26,5 @@ export const root = [
         path: "/admin/category",
         element: <Categories/>,
         icon: <ProductOutlined/>
-    }
+    },
 ]

@@ -1,0 +1,11 @@
+.even-row {
+    background-color: #f0f0f0;
+  }
+  
+  /* Cell Styling */
+  .name-column {
+    font-weight: bold;
+  }
+  .last-column {
+    font-weight: bold;
+  }
