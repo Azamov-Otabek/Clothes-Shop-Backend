@@ -22,6 +22,7 @@ const useMedia = create((set) => ({
         if(response.status === 200){  
             toast.success('Media uploaded successfully', {autoClose: 1000})
         }
+        return response
     }catch(e){
         console.log(e);
         toast.error('Something went wrong', {autoClose: 1000})
@@ -31,14 +32,8 @@ const useMedia = create((set) => ({
   deleteMedia: async (payload:any) => {
     try{
         set({isLoader: true})
-        const response = await http.delete(`/media/${payload}`)
-        if(response.status === 200){
-          set((state:any) => ({
-            data: state.data.filter((x:any) => x.id !== payload)
-        }));
+        await http.delete(`/media/${payload}`)
         toast.success('Users deleted successfully')
-        }
-
         set({isLoader: false})
     }catch(e){
         console.log(e)

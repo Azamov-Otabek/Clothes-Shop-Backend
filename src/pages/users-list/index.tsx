@@ -56,7 +56,7 @@ const thead: TableProps<DataType>['columns'] = [
     dataIndex: 'action',
     render: (__, _, i) => (
       <Space size="middle">
-        <a><Modal postData={updateData} text={updateData}/></a>
+        <a><Modal postData={updateData} text={[data[i]]}/></a>
         <a className='bg-[#151341] py-[7px] px-[15px] rounded-md text-white font-bold ' onClick={() => deleteButton(data[i].id)}>Delete</a>
       </Space>
     ),

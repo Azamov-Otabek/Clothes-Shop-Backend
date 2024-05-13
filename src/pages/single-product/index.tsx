@@ -1,21 +1,25 @@
 import Cookies from "js-cookie"
-import { ZusProduct, ZusCategory } from "@store"
+import { ZusProduct, ZusCategory, ZusMedia } from "@store"
 import { useStore } from "zustand"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import ProductModal from "../../components/ui/product-modal"
 import { Button } from "antd"
 import { ToastContainer } from "react-toastify"
-
+import { Image } from 'antd';
 function index() {
   const { getProductbyId, idData, deleteProduct, updateProduct}:any = useStore(ZusProduct)
   const { datas, getCategory}:any = useStore(ZusCategory)
+  const { getMedia, deleteMedia, postMedia}:any = useStore(ZusMedia)
+  const [img, setimg] = useState('')
   const id = Cookies.get('id')
   const navigate = useNavigate()
 
   async function getDataa(){
     getProductbyId(id)
     getCategory({page: 1, limit: 1000})
+    const response = await getMedia(id)
+    setimg(response?.data?.images[response?.data?.images?.length - 1].image_url)
   }
   
   async function deleteData(){
@@ -27,9 +31,31 @@ function index() {
 
   async function updateData(e:any){
     e.product_id = idData.product_id
-    updateProduct(e)
-    navigate('/admin/products')
+    await updateProduct(e)
+    setTimeout(() => {
+      window.location.reload()
+    }, 2000);
   }
+
+  async function deleteImg(){
+    await deleteMedia(id)
+    getDataa()
+    setTimeout(() => {
+      window.location.reload()
+    }, 3000);
+  }
+
+  async function updateImg(e:any){
+    const file = e.target.files[0];
+    const payload = {
+      upload_photo: file,
+      id: id,
+    }
+    await postMedia(payload)
+    setTimeout(() => {
+      window.location.reload()
+    }, 3000);
+  };
 
   useEffect(() => {
     getDataa()
@@ -38,8 +64,8 @@ function index() {
     <>
     <ToastContainer />
       <div className="max-w-[500px] mx-auto mt-[50px]">
-          <img src="" alt="PRODUCT FOTO" />
-        <div className="card-body text-center mt-[20px] bg-[#001529] text-[white] rounded-xl p-[40px]">
+          <Image width={500} height={300} src={img}/>
+        <div className="card-body text-center bg-[#001529] text-[white] rounded-b-xl p-[40px]">
           <p className="text-[20px]">Name: {idData.product_name}</p>
           <p className="text-[20px]">Description: {idData.description}</p>
           <div className="flex justify-center text-center gap-3 ">
@@ -47,20 +73,22 @@ function index() {
             <p className="text-[20px]">Min age: {idData.age_max}</p>
           </div>
           <div className="flex justify-center gap-3">
-            <p className="text-[20px]">Narxi: {idData.cost}</p>
+            <p className="text-[20px]">Narxi: {idData.cost}$</p>
             <p className="text-[20px]">Soni: {idData.count}</p>
           </div>
           <p className="text-[20px]">Size: {idData.size}</p>
+          <p className="text-[20px]">Size: {idData.color}</p>
           <p className="text-[20px]">Made in: {idData.made_in}</p>
-          <p className="text-[20px]">Discount: {idData.discount}</p>
-          <p className="text-[20px]">Gender: {idData.for_gender}</p>
+          <p className="text-[20px]">Discount: {(idData.cost - (idData.cost / 100 * idData.discount))}$</p>
+          <p className="text-[20px]">Gender for: {idData.for_gender}</p>
           <div className="flex gap-[30px] justify-center mb-[20px] mt-[20px]">
               <ProductModal datas={datas} text={idData} title={'Update'} postData={updateData}/>
               <Button onClick={() => deleteData()} type="primary" className='flex items-center text-[16px] font-semibold'>Delete Product</Button>   
           </div>
-          <div className="flex gap-[30px] justify-center">
+          <div className="flex gap-[30px] justify-center relative">
               <Button type="primary" className='flex items-center text-[16px] font-semibold'>Update Image</Button>   
-              <Button type="primary" className='flex items-center text-[16px] font-semibold'>Delete Image</Button>   
+              <Button onClick={() => deleteImg()} type="primary" className='flex items-center text-[16px] font-semibold'>Delete Image</Button>   
+              <input onChange={(e) => updateImg(e)} type="file" accept="image/*" className="absolute left-[66px] top-1 opacity-0 w-[130px]"/>
           </div>
         </div>
 

@@ -12,7 +12,6 @@ const waitTime = (time: number = 100) => {
   });
 };
 
-
 export default (props:any) => {
   const { token } = theme.useToken();  
   const [gender, setGender] = useState('male');
@@ -26,13 +25,12 @@ export default (props:any) => {
       props.postData(e)
     }else{
       e.age = +e.age
-      e.id = props.postData[0].id
-      e.access_token = props.postData[0].access_token || ''
-      e.refresh_token = props.postData[0].refresh_token || ''
-      props.text(e)
+      e.id = props.text[0].id
+      e.access_token = props.text[0].access_token || ''
+      e.refresh_token = props.text[0].refresh_token || ''
+      props.postData(e)
     }
   }
-
   return (
     <ModalForm<{
       first_name: string;
@@ -70,6 +68,7 @@ export default (props:any) => {
           label="Ism kiriting"
           placeholder="John"
           rules={UserNameValidation}
+          initialValue={props.text[0].first_name} 
           
         />
 
@@ -78,6 +77,7 @@ export default (props:any) => {
           width="md"
           name="last_name"
           label="Familya kiriting"
+          initialValue={props.text[0].last_name}
           placeholder="Doe"
           rules={UserLastNameValidation}
         />
@@ -90,6 +90,7 @@ export default (props:any) => {
           label="Email kiriting"
           placeholder="JohnDoe@gmail.com"
           rules={UserEmailValidation}
+          initialValue={props.text[0].email}
         />
        <ProFormText.Password
               width="md"
@@ -97,6 +98,7 @@ export default (props:any) => {
               name="password"
               label="Password kiriting"
               rules={PasswordValidation}
+              initialValue={props.text[0].password}
               fieldProps={{
               prefix: (
                 <LockOutlined
@@ -117,6 +119,7 @@ export default (props:any) => {
         name="age"
         label="Yosh kiriting"
         placeholder="30"
+        initialValue={props.text[0].age}
         rules={UserAgeValidation}
       />
       <ProFormText
@@ -125,6 +128,7 @@ export default (props:any) => {
         name="phone_number"
         label="Telefon raqam kiriting"
         placeholder="9989XXXXXXXX"
+        initialValue={props.text[0].phone_number}
         rules={UserPhoneValidation}
 
       />

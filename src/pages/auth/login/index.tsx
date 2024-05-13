@@ -21,7 +21,6 @@ const Page = () => {
   async function handleSubmit(e:Login){
     const response = await authRequest.Login(e)
     if(response.status == 200){
-      navigate('/admin')
       toast.success('Tizimga kirish uchun ruxsat berildi', {autoClose: 1200})
       setTimeout(() => {
         if(response.data.role == 'admin' || response.data.role == 'worker'){
@@ -128,7 +127,6 @@ const Page = () => {
               name="email"
               fieldProps={{
                 size: 'large',
-                defaultValue: 'xasannosirov094@gmail.com',
                 prefix: (
                   <UserOutlined
                     style={{
@@ -144,7 +142,6 @@ const Page = () => {
             <ProFormText.Password
               name="password"
               fieldProps={{
-                defaultValue: 'Sehtols@01',
                 size: 'large',
                 prefix: (
                   <LockOutlined
