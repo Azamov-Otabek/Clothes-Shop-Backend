@@ -1,5 +1,5 @@
 # Login 
- - login: <h1>xasannosirov094@gmail.com"</h1>
+ - login: <h1>xasannosirov094@gmail.com</h1>
  - password: <h1>Sehtols@01</h1>
 
 
@@ -35,7 +35,11 @@
 
 
 ## Papkalar joylashuvi.
-```
-  Hamma componentalar aloxida fayllarga olingan. Global Table dan foydalangan. Modallar esa har bitta page uchun aloxida ochilgan va update, post qilishlar Global qilinib ishlangan.
-  Interfacelar yozilgan. Toastifylardan foydalanilgan. Validation elementlar Utils papkani ichida ochilgan. Kop templatelar ant design kutibxonasidan foydalanilgan.
-```
+
+ - Hamma componentalar aloxida fayllarga olingan. Global Table dan foydalangan.
+ - Modallar esa har bitta page uchun aloxida ochilgan va update, post qilishlar Global qilinib ishlangan.
+ - Interfacelar yozilgan. 
+ - Toastifylardan foydalanilgan.
+ - Validation elementlar Utils papkani ichida ochilgan. 
+ - Kop templatelar ant design kutibxonasidan foydalanilgan.
+
