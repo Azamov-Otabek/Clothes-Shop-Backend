@@ -1,7 +1,6 @@
 import { ModalForm, ProForm,ProFormText, ProFormTextArea} from '@ant-design/pro-components';
 import { Button, Radio, Select } from 'antd';
 import { useState } from 'react';
-import { Input } from 'antd';
 
 const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
@@ -10,7 +9,6 @@ const waitTime = (time: number = 100) => {
     }, time);
   });
 };
-const { TextArea } = Input;
 
 
 
