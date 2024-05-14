@@ -63,29 +63,26 @@ function index() {
   return (
     <>
     <ToastContainer />
-      <div className="max-w-[500px] mx-auto mt-[50px]">
-          <Image width={500} height={300} src={img}/>
-        <div className="card-body text-center bg-[#001529] text-[white] rounded-b-xl p-[40px]">
+      <div className="border justify-center mt-[50px] flex w-[1100px] mx-auto">
+          <Image width={500} height={520}  src={img}/>
+        <div className="card-body  bg-[#001529] text-[white] rounded-r-xl p-[40px] w-[600px]">
           <p className="text-[20px]">Name: {idData.product_name}</p>
-          <p className="text-[20px]">Description: {idData.description}</p>
-          <div className="flex justify-center text-center gap-3 ">
-            <p className="text-[20px]">Max age: {idData.age_max}</p>
-            <p className="text-[20px]">Min age: {idData.age_max}</p>
-          </div>
-          <div className="flex justify-center gap-3">
-            <p className="text-[20px]">Narxi: {idData.cost}$</p>
-            <p className="text-[20px]">Soni: {idData.count}</p>
-          </div>
+          <p className="text-[20px]">Description: 
+          {idData.description}</p>
+          <p className="text-[20px]">Max age: {idData.age_max}</p>
+          <p className="text-[20px]">Min age: {idData.age_max}</p>
+          <p className="text-[20px]">Narxi: {idData.cost}$</p>
+          <p className="text-[20px]">Soni: {idData.count}</p>
           <p className="text-[20px]">Size: {idData.size}</p>
           <p className="text-[20px]">Size: {idData.color}</p>
           <p className="text-[20px]">Made in: {idData.made_in}</p>
           <p className="text-[20px]">Discount: {(idData.cost - (idData.cost / 100 * idData.discount))}$</p>
           <p className="text-[20px]">Gender for: {idData.for_gender}</p>
-          <div className="flex gap-[30px] justify-center mb-[20px] mt-[20px]">
+          <div className="flex gap-[30px] mb-[20px] mt-[20px]">
               <ProductModal datas={datas} text={idData} title={'Update'} postData={updateData}/>
               <Button onClick={() => deleteData()} type="primary" className='flex items-center text-[16px] font-semibold'>Delete Product</Button>   
           </div>
-          <div className="flex gap-[30px] justify-center relative">
+          <div className="flex gap-[30px] relative">
               <Button type="primary" className='flex items-center text-[16px] font-semibold'>Update Image</Button>   
               <Button onClick={() => deleteImg()} type="primary" className='flex items-center text-[16px] font-semibold'>Delete Image</Button>   
               <input onChange={(e) => updateImg(e)} type="file" accept="image/*" className="absolute left-[66px] top-1 opacity-0 w-[130px]"/>

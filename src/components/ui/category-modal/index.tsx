@@ -33,6 +33,7 @@ export default (props:any) => {
       onFinish={async (values) => {
         await waitTime(2000);
         handleFormChange(values)
+        return true
       }}
       modalProps={{
         destroyOnClose: true,
@@ -53,6 +54,7 @@ export default (props:any) => {
           name="category_name"
           label="Categoriya nomini kiriting"
           placeholder="Futbolkalar"
+          initialValue={props.value?.category_name}
           rules={[{
             required: true,
             message: 'Categoriya nomini kiriting',

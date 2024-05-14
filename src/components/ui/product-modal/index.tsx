@@ -1,6 +1,7 @@
-import { ModalForm, ProForm,ProFormText} from '@ant-design/pro-components';
+import { ModalForm, ProForm,ProFormText, ProFormTextArea} from '@ant-design/pro-components';
 import { Button, Radio, Select } from 'antd';
 import { useState } from 'react';
+import { Input } from 'antd';
 
 const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
@@ -9,6 +10,7 @@ const waitTime = (time: number = 100) => {
     }, time);
   });
 };
+const { TextArea } = Input;
 
 
 
@@ -57,6 +59,7 @@ export default (props:any) => {
       onFinish={async (values) => {
         await waitTime(2000);
         handleFormChange(values)
+        return true
       }}
       modalProps={{
         destroyOnClose: true,
@@ -145,18 +148,17 @@ export default (props:any) => {
           message: 'Sonini kiriting',
         }]}
       />
-      <ProFormText
-        hasFeedback
+       <ProFormText
         width="md"
-        name="description"
-        label="Product description kiriting" 
-        initialValue={props.title == 'Update' && props.text['description'] || ''}
-        placeholder="...."
+        hasFeedback
+        name="size"
+        label="Product o'lchamini kiriting "
+        initialValue={props.title == 'Update' && props.text['size'] || ''}
+        placeholder="25"
         rules={[{
           required: true,
-          message: 'Product description kiriting',
+          message: 'Product o\'lchamini kiriting',
         }]}
-
       />
       </ProForm.Group>
       <ProForm.Group>
@@ -186,17 +188,13 @@ export default (props:any) => {
 
       />
       </ProForm.Group>
-      <ProFormText
-        width="md"
+      <ProFormTextArea
+        name="description"
+        label="Description"
+        placeholder="Please enter your description"
+        rules={[{ required: true, message: 'Description kiriting!' }]}
+        initialValue={props.title == 'Update' && props.text['description'] || ''}
         hasFeedback
-        name="size"
-        label="Product o'lchamini kiriting "
-        initialValue={props.title == 'Update' && props.text['size'] || ''}
-        placeholder="25"
-        rules={[{
-          required: true,
-          message: 'Product o\'lchamini kiriting',
-        }]}
       />
        <ProForm.Group>
         <Select

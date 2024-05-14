@@ -47,6 +47,7 @@ export default (props:any) => {
       onFinish={async (values) => {
         await waitTime(2000);
         handleFormChange(values)
+        return true
       }}
       modalProps={{
         destroyOnClose: true,

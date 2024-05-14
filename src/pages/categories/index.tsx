@@ -33,14 +33,13 @@ const thead: TableProps<DataType>['columns'] = [
     dataIndex: 'action',
     render: (__, _, i) => (
       <Space size="middle">
-        <a><CategoryModal postData={updateData} text={updateData} item={datas[i].category_id}/></a>
+        <a><CategoryModal postData={updateData} value={datas[i]} text={updateData} item={datas[i].category_id}/></a>
         <a className='bg-[#151341] py-[7px] px-[15px] rounded-md text-white font-bold' onClick={() => deleteButton(datas[i].category_id)}>Delete</a>
       </Space>
     ),
   },
 ];
   async function deleteButton(id:any){
-    console.log(id);
     await deleteCategory(id)
     getData()
   }

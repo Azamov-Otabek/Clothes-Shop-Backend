@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Space, Spin } from 'antd';
+import { AutoComplete, Input, Space, Spin } from 'antd';
 import type { TableProps } from 'antd';
 import { DataType } from '../../interface/global';
 import { ZusProduct, ZusCategory } from '@store';
@@ -16,12 +16,14 @@ function index() {
   const [ispage, setispage] = useState(1)
   const {data, count, getProduct, isLoader, postProduct}:any = useStore(ZusProduct)
   const {datas, getCategory}:any = useStore(ZusCategory)
+  const [search, setsearch] = useState('')
   const limit = 5
   const lastcount = Math.ceil(count/limit)
   const getData = async() => {
     const user = {
       page: ispage,
       limit: limit,
+      name: search
     }
     await getProduct(user)
     await getCategory({page: 1, limit: 1000})
@@ -82,11 +84,16 @@ const thead: TableProps<DataType>['columns'] = [
   }
     useEffect(() => {
       getData()
-    }, [ispage])
+    }, [ispage, search])
   return (
    <>
       <ToastContainer/>
-      <div className='flex justify-end  py-5'><ProductModal datas={datas} postData={postData} text={'add'} title={'Product'}/></div>
+      <div className='flex justify-between  py-5'>
+        <AutoComplete popupMatchSelectWidth={252} style={{ width: 300 }}  onChange={((e) => setsearch(e))}>
+        <Input.Search size="large" placeholder="input here" enterButton />
+        </AutoComplete>
+        <ProductModal datas={datas} postData={postData} text={'add'} title={'Product qoshish'}/>
+      </div>
       {isLoader ?  <div className='flex justify-center mt-[200px]'> <Spin size="large" /></div> :
       <GlobalTable thead={thead} data={data} lastcount={lastcount} setispage={setispage} ispage={ispage}/>}
      </>

@@ -10,7 +10,7 @@ const useProductStore = create ((set) => ({
   getProduct: async (payload:any) => {
     try{
         set({isLoader: true})
-        const response = await http.get(`/products?page=${payload.page}&limit=${payload.limit}`)
+        const response = await http.get(`/products?page=${payload.page}&limit=${payload.limit}&name=${payload.name}`)
         if(response.status === 200){
           set({data: response?.data?.products})
           set({count: response?.data?.total_count})
