@@ -1,0 +1,9 @@
+@import "react-image-gallery/styles/css/image-gallery.css";
+
+
+
+
+  .custom-gallery .image-gallery-content {
+    width: 1000px;
+    position: relative;
+  }

@@ -7,10 +7,13 @@ import { useStore } from 'zustand';
 import { GlobalTable } from '@ui';
 import { ToastContainer } from 'react-toastify';
 import {Modal} from '../../components/ui';
+import { Pogination } from '@ui';
+import { useSearchParams } from 'react-router-dom';
 
 
 function index() {
-  const [ispage, setispage] = useState(1)
+  const [searchParams] = useSearchParams()
+  const [ispage, setispage] = useState(Number(searchParams.get('page')) || 1)
   const {data, count, getWorkers, isLoader, deleteWorkers, postWorkers, updateWorkers}:any = useStore(ZusWorker)
   const limit = 5
   const lastcount = Math.ceil(count/limit)
@@ -85,6 +88,7 @@ const thead: TableProps<DataType>['columns'] = [
       <div className='flex justify-end  py-5'><Modal postData={postData} text={'add'} title={'Worker'}/></div>
       {isLoader ?  <div className='flex justify-center mt-[200px]'> <Spin size="large" /></div> :
       <GlobalTable thead={thead} data={data} lastcount={lastcount} setispage={setispage} ispage={ispage}/>}
+      <Pogination totall={count} setpage={setispage} page={ispage} />
      </>
   )
 }

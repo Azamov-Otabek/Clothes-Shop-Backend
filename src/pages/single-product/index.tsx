@@ -7,19 +7,34 @@ import ProductModal from "../../components/ui/product-modal"
 import { Button } from "antd"
 import { ToastContainer } from "react-toastify"
 import { Image } from 'antd';
+import './style.css'
+import ImageGallery from "react-image-gallery";
+
+
 function index() {
   const { getProductbyId, idData, deleteProduct, updateProduct}:any = useStore(ZusProduct)
   const { datas, getCategory}:any = useStore(ZusCategory)
   const { getMedia, deleteMedia, postMedia}:any = useStore(ZusMedia)
-  const [img, setimg] = useState('')
+  const [img, setimg] = useState([])
   const id = Cookies.get('id')
   const navigate = useNavigate()
-
+  console.log(img);
   async function getDataa(){
     getProductbyId(id)
     getCategory({page: 1, limit: 1000})
     const response = await getMedia(id)
-    setimg(response?.data?.images[response?.data?.images?.length - 1].image_url)
+    const rasm = response?.data?.images.map((e:any) => {
+      return e.image_url
+    })
+    
+    const images = 
+      rasm.map((e:any) => {
+        return {
+          original: e,
+          thumbnail: e,
+        }
+      })
+    setimg(images)
   }
   
   async function deleteData(){
@@ -63,9 +78,9 @@ function index() {
   return (
     <>
     <ToastContainer />
-      <div className="border justify-center mt-[50px] flex w-[1100px] mx-auto">
-          <Image width={500} height={520}  src={img}/>
-        <div className="card-body  bg-[#001529] text-[white] rounded-r-xl p-[40px] w-[600px]">
+      <div className="border justify-center mt-[50px] flex w-[1100px] mx-auto">  
+          <ImageGallery  items={img} autoPlay showNav={true} showFullscreenButton={false} showPlayButton={false} showBullets={true}  thumbnailPosition="left" />
+        <div className="card-body  bg-[#001529] text-[white] rounded-r-xl p-[40px] w-[600px] h-[520px]">
           <p className="text-[20px]">Name: {idData.product_name}</p>
           <p className="text-[20px]">Description: 
           {idData.description}</p>
