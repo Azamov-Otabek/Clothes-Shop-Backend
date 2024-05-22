@@ -6,10 +6,13 @@ import { ZusCategory } from '@store';
 import { useStore } from 'zustand';
 import { GlobalTable, CategoryModal } from '@ui';
 import { ToastContainer } from 'react-toastify';
+import { Pogination } from '@ui';
+import { useSearchParams } from 'react-router-dom';
 
 
 function index() {
-  const [ispage, setispage] = useState(1)
+  const [searchParams] = useSearchParams()
+  const [ispage, setispage] = useState(Number(searchParams.get('page')) || 1)
   const {datas, count, getCategory, isLoader, deleteCategory, postCategory, updateCategory} = useStore(ZusCategory)
   const limit = 5
   const lastcount = Math.ceil(count/limit)
@@ -62,6 +65,7 @@ const thead: TableProps<DataType>['columns'] = [
       <div className='flex justify-end  py-5'><CategoryModal postData={postData} text={'add'} title={'Category'}/></div>
       {isLoader ?  <div className='flex justify-center mt-[200px]'> <Spin size="large" /></div> :
       <GlobalTable thead={thead} data={datas} lastcount={lastcount} setispage={setispage} ispage={ispage}/>}
+       <Pogination totall={count} setpage={setispage} page={ispage} />
      </>
   )
 }

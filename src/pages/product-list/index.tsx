@@ -8,18 +8,24 @@ import { GlobalTable } from '@ui';
 import { ToastContainer } from 'react-toastify';
 import {ProductModal, UploadImg} from '../../components/ui';
 import { EyeOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { setCookies } from '../../utils/cocies';
+import { Pogination } from '@ui';
 
 function index() {
+  const location = useLocation()
   const navigate = useNavigate()
-  const [ispage, setispage] = useState(1)
+  const searchparams = new URLSearchParams(location.search)
+  const [searchParams] = useSearchParams()
+  const [ispage, setispage] = useState(Number(searchParams.get('page')) || 1)
   const {data, count, getProduct, isLoader, postProduct}:any = useStore(ZusProduct)
   const {datas, getCategory}:any = useStore(ZusCategory)
-  const [search, setsearch] = useState('')
+  const [search, setsearch] = useState(searchparams.get('search') || '')
   const limit = 5
   const lastcount = Math.ceil(count/limit)
   const getData = async() => {
+    searchparams.set('search', search)
+    navigate(`?${searchparams}`)
     const user = {
       page: ispage,
       limit: limit,
@@ -89,13 +95,14 @@ const thead: TableProps<DataType>['columns'] = [
    <>
       <ToastContainer/>
       <div className='flex justify-between  py-5'>
-        <AutoComplete popupMatchSelectWidth={252} style={{ width: 300 }}  onChange={((e) => setsearch(e))}>
+        <AutoComplete popupMatchSelectWidth={252} style={{ width: 300 }} defaultValue={search}  onChange={((e) => setsearch(e))}>
         <Input.Search size="large" placeholder="input here" enterButton />
         </AutoComplete>
         <ProductModal datas={datas} postData={postData} text={'add'} title={'Product qoshish'}/>
       </div>
       {isLoader ?  <div className='flex justify-center mt-[200px]'> <Spin size="large" /></div> :
       <GlobalTable thead={thead} data={data} lastcount={lastcount} setispage={setispage} ispage={ispage}/>}
+       <Pogination totall={count} setpage={setispage} page={ispage} />
      </>
   )
 }

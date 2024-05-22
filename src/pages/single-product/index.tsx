@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom"
 import ProductModal from "../../components/ui/product-modal"
 import { Button } from "antd"
 import { ToastContainer } from "react-toastify"
-import { Image } from 'antd';
 import './style.css'
 import ImageGallery from "react-image-gallery";
 
